@@ -2,7 +2,7 @@
 import paramak
 import os
 rotated_circle = paramak.ExtrudeCircleShape(
-points=[(, 0),], radius=0.95, distance=1.2, workplane="XZ", name="part0.stl",)
+points=[(1, 0),], radius=0.95, distance=1.2, workplane="XZ", name="part0.stl",)
 grey_part = paramak.ExtrudeStraightShape(
 points=[
 	 (-1.15, -1.25),
