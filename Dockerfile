@@ -49,4 +49,14 @@ RUN conda activate openmc_env && \
     pip install openmc_data_downloader && \
     pip install openmc_tally_unit_converter
   
-COPY cad1.py /home/ibsim/cad1.py
+ENV PATH /opt/conda/bin:$PATH
+
+
+
+ENV CONDA_DEFAULT_ENV pv
+RUN conda create --name pv
+ENV PATH /opt/conda/envs/pv/bin:$PATH
+RUN conda init bash \
+    && . /root/.bashrc \
+RUN conda activate pv && \
+    conda install paraview
