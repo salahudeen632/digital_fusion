@@ -5,7 +5,6 @@ FROM continuumio/miniconda3:latest as dependencies
 
 # By default this Dockerfile builds with the latest release of CadQuery 2
 ARG cq_version=2.1
-
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
