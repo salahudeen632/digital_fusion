@@ -1,0 +1,39 @@
+FROM ubuntu:18.04
+
+
+FROM continuumio/miniconda3:4.9.2 as dependencies
+
+# By default this Dockerfile builds with the latest release of CadQuery 2
+ARG cq_version=2.1
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get --allow-releaseinfo-change update
+RUN apt-get update -y && \
+    apt-get upgrade -y
+
+
+
+
+RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa-dev  freeglut3-dev libosmesa6 libosmesa6-dev  libgles2-mesa-dev curl imagemagick && \
+                       apt-get clean
+
+
+
+ENV PATH="/root/miniconda3/bin:${PATH}"
+ARG PATH="/root/miniconda3/bin:${PATH}"
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && bash Miniconda3-latest-Linux-x86_64.sh -b \
+    && rm -f Miniconda3-latest-Linux-x86_64.sh \
+    && echo "Running $(conda --version)" && \
+    conda init bash && \
+    . /root/.bashrc && \
+    conda update conda && \
+    conda create --name paramak_env python=3.8 && \
+    conda activate paramak_env && \
+    conda install -c cadquery -c conda-forge cadquery=master  && \
+    conda install -c conda-forge gmsh=4.9.3 && \
+    conda install -c conda-forge python-gmsh=4.9.3 && \
+    conda install -c conda-forge 'moab>=5.3.0' && \
+    pip install paramak
